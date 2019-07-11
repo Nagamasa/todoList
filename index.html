@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TodoList</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <div id="app">
+    <h1>TODO LIST</h1>
+    <!-- 絞り込みラジオボタン -->
+    refine：
+    <label v-if="label.refine" v-for="label in options">
+      <input type="radio"
+        v-model="current"
+        v-bind:value="label.value">{{ label.label }}
+    </label>
+
+    <div id="option-area">
+      ({{ computedTodos.length }} 件)
+      <button v-on:click="doAllRemove()">一括削除</button>
+    </div>
+    <!-- ToDo テーブル -->
+    <table>
+      <thead>
+        <tr>
+          <th class="id">ID</th>
+          <th class="task">TASK</th>
+          <th class="state">STATE</th>
+          <th class="deadline">〆</th>
+          <th class="priority">PRIORITY</th>
+          <th class="deleteButton">-</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr v-for="item in computedTodos" v-bind:key= "item.id">
+          <th>{{ item.id }}</th>
+          <td>{{ item.task }}</td>
+
+          <td class="state">
+            <button v-on:click="doChangeState(item)">{{ labels[item.state] }}</button>
+          </td>
+          <td class="deadline">{{ item.deadline }}</td>
+          <td class="priority">
+            <button v-on:click="doChangePriority(item)">{{ labels[item.priority] }}</button>
+          </td>
+          <td class="deleteButton">
+            <button v-on:click="doRemove(item)">削除</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 新規登録フォーム -->
+    <h2>NEW TASK ADD</h2>
+    <!-- 新規のタスク追加時ページをリロードさせない -->
+    <form class="add-form" v-on:submit.prevent="doAdd">
+        Date <input type="date" ref="date">
+        Task <input type="text" ref="taskText" maxlength="50">
+        <button type="submit">add</button>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
