@@ -14,6 +14,8 @@ Dateに期日、Taskにtodoを記載し、add押下
 削除ボタン押下、一括削除ボタンで一括削除できる
 * 絞り込み  
 作業中、完了で絞り込み可能
+* 優先度ソート追加
+PRIORITY ヘッダー押下時ソートする(昇順、降順かはsortOrderボタン(Asc,desc)による)
 
 # License
 This software is released under the MIT License, see LICENSE.
