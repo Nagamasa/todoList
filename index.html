@@ -20,6 +20,9 @@
     <div id="option-area">
       ({{ computedTodos.length }} 件)
       <button v-on:click="doAllRemove()">一括削除</button>
+      <span>sortOrder : </span>
+      <button v-if="sortOrder > 0" v-on:click="changeSortOrder()">Asc</button>
+      <button v-else v-on:click="changeSortOrder()">Desc</button>
     </div>
     <!-- ToDo テーブル -->
     <table>
@@ -29,7 +32,7 @@
           <th class="task">TASK</th>
           <th class="state">STATE</th>
           <th class="deadline">〆</th>
-          <th class="priority">PRIORITY</th>
+          <th class="priority" v-on:click="setSortKey(priority)">PRIORITY</th>
           <th class="deleteButton">-</th>
         </tr>
       </thead>
@@ -63,7 +66,7 @@
     </form>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

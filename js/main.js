@@ -17,9 +17,9 @@ let todoStorage = {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
   }
 }
-const PRIORITY_HIGH = 2,
+const PRIORITY_HIGH = 4,
       PRIORITY_MIDOLLE = 3,
-      PRIORITY_LOW = 4
+      PRIORITY_LOW = 2
 
 const app = new Vue({
   el: '#app',
@@ -30,10 +30,13 @@ const app = new Vue({
         {value: -1, label: 'all', refine: true},
         {value: 0, label: 'working', refine: true},
         {value: 1, label: 'completed', refine: true},
-        {value: 2, label: '高', refine: false},
+        {value: 2, label: '低', refine: false},
         {value: 3, label: '中', refine: false},
-        {value: 4, label: '低', refine: false}
+        {value: 4, label: '高', refine: false}
       ],
+      priority: 'priority',
+      sortByKey: '',
+      sortOrder: 1,
       current: -1
     }
   },
@@ -77,6 +80,14 @@ const app = new Vue({
       item.priority = PRIORITY_HIGH
       return
     },
+    // sort昇順、降順変更処理
+    changeSortOrder: function() {
+      this.sortOrder *= -1
+    },
+    // sortKey設定
+    setSortKey: function(key) {
+      this.sortByKey = key
+    },
     // 削除処理
     doRemove: function(item) {
       let index = this.todos.indexOf(item)
@@ -104,8 +115,20 @@ const app = new Vue({
   computed: {
     // データを絞り込む
     computedTodos() {
+      let sortByKey = this.sortByKey
+      let order = this.sortOrder
+      let current = this.current
+    
+      if (sortByKey) {
+        this.sortByKey = ''
+
+        return this.todos.sort(function(a, b) {
+          return (a[sortByKey] > b[sortByKey]) ? order : (a[sortByKey] < b[sortByKey]) ? - order : 0
+        })
+      }
+
       return this.todos.filter(function(el) {
-        return this.current < 0 ? true : this.current === el.state
+        return current < 0 ? true : current === el.state
       }, this)
     },
     // valueからlabelに変換
