@@ -19,7 +19,8 @@ let todoStorage = {
 }
 const PRIORITY_HIGH = 4,
       PRIORITY_MIDOLLE = 3,
-      PRIORITY_LOW = 2
+      PRIORITY_LOW = 2,
+      MAX_LENGTH = 50
 
 const app = new Vue({
   el: '#app',
@@ -27,9 +28,9 @@ const app = new Vue({
     return {
       todos: [],
       options: [
-        {value: -1, label: 'all', refine: true},
-        {value: 0, label: 'working', refine: true},
-        {value: 1, label: 'completed', refine: true},
+        {value: -1, label: '全て', refine: true},
+        {value: 0, label: '作業中', refine: true},
+        {value: 1, label: '完了', refine: true},
         {value: 2, label: '低', refine: false},
         {value: 3, label: '中', refine: false},
         {value: 4, label: '高', refine: false}
@@ -37,7 +38,8 @@ const app = new Vue({
       priority: 'priority',
       sortByKey: '',
       sortOrder: 1,
-      current: -1
+      current: -1,
+      text: ''
     }
   },
   methods: {
@@ -106,6 +108,17 @@ const app = new Vue({
       },
       // ネストしているデータも監視
       deep: true
+    },
+    text: {
+      handler: function() {
+        let addButton = document.getElementById('addButton');
+
+        if (this.text.length >= MAX_LENGTH) {
+          addButton.disabled = true;
+        }else {
+          addButton.disabled = false;
+        }
+      }
     }
   },
   created() {

@@ -10,7 +10,7 @@
   <div id="app">
     <h1>TODO LIST</h1>
     <!-- 絞り込みラジオボタン -->
-    refine：
+    絞り込み：
     <label v-if="label.refine" v-for="label in options">
       <input type="radio"
         v-model="current"
@@ -20,7 +20,7 @@
     <div id="option-area">
       ({{ computedTodos.length }} 件)
       <button v-on:click="doAllRemove()">一括削除</button>
-      <span>sortOrder : </span>
+      <span>昇順・降順 : </span>
       <button v-if="sortOrder > 0" v-on:click="changeSortOrder()">Asc</button>
       <button v-else v-on:click="changeSortOrder()">Desc</button>
     </div>
@@ -59,14 +59,16 @@
     <!-- 新規登録フォーム -->
     <h2>NEW TASK ADD</h2>
     <!-- 新規のタスク追加時ページをリロードさせない -->
-    <form class="add-form" v-on:submit.prevent="doAdd">
+    <form class="addForm" v-on:submit.prevent="doAdd">
         Date <input type="date" ref="date">
-        Task <input type="text" ref="taskText" maxlength="50">
-        <button type="submit">add</button>
+        Task <input type="text" ref="taskText" v-model="text">
+        <button id="addButton" type="submit">add</button>
+        <span>文字数:</span>{{ text.length }}
+        <span v-if="text.length >= 50">※50文字以上は入力不可です</span>
     </form>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
