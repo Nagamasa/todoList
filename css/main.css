@@ -27,6 +27,9 @@ thead th.state {
 thead th.button {
   width: 60px;
 }
+body {
+  font-family: Arial, Helvetica, sans-serif
+}
 tbody tr td,
 tbody tr th {
   border-bottom: 1px solid #ccc;
